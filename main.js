@@ -2,37 +2,43 @@ const API_KEY = "";
 
 const form = document.querySelector(".search form");
 const inputCity = document.querySelector(".search input");
-const info = document.querySelector(".info .info-container");
+const info = document.querySelector(".info");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const inputVal = inputCity.value;
 
   // agregar coso para que se pueda elegir entre metrico o imperial
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&appid=${API_KEY}&unints=metric`;
+  const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${inputVal}?unitGroup=metric&key=${API_KEY}`;
 
-  console.log(url);
-  fetch(url)
+  fetch(url, {
+    method: "GET",
+    mode: "cors",
+    headers: { "Content-Type": "application/json" },
+  })
     .then((response) => response.json())
     .then((data) => {
-      const { name, main, weather, sys } = data;
+      console.log(data);
+      const { resolvedAddress, days } = data;
 
       const city = document.createElement("div");
-      // city.classList.add("something")
+      city.classList.add("info-container");
 
       const weatherMarkUp = `
-        <h2>${name}</h2>
-        <p>${sys.country}</p>
-        <p>${Math.round(main.temp)}C</p>
-        <p>${weather[0]["description"]}</p>
+        <h2>${resolvedAddress}</h2>
+        <p>${days[0]["temp"]}°<sup>c</sup></p>
+        <p>${days[0]["conditions"]} ${Math.round(
+        days[0]["tempmax"]
+      )}°/${Math.round(days[0]["tempmin"])}°</p>
+        <p>${days[0]["description"]}</p>
       `;
 
       city.innerHTML = weatherMarkUp;
 
       info.appendChild(city);
     })
-    .catch(() => {
-      console.log("AAAGH");
+    .catch((e) => {
+      console.log(e);
     });
 
   form.reset();
