@@ -8,8 +8,13 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
   const inputVal = inputCity.value;
 
-  // agregar coso para que se pueda elegir entre metrico o imperial
-  const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${inputVal}?unitGroup=metric&key=${API_KEY}`;
+  const date = new Date();
+
+  const { yesterday: dayBefore, nextDays: fiveDaysAfter } = formatDate(date);
+
+  console.log(dayBefore, fiveDaysAfter);
+
+  const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${inputVal}/${dayBefore}/${fiveDaysAfter}?unitGroup=metric&key=${API_KEY}`;
 
   fetch(url, {
     method: "GET",
@@ -25,12 +30,17 @@ form.addEventListener("submit", (e) => {
       city.classList.add("info-container");
 
       const weatherMarkUp = `
-        <h2>${resolvedAddress}</h2>
-        <p>${days[0]["temp"]}°<sup>c</sup></p>
-        <p>${days[0]["conditions"]} ${Math.round(
-        days[0]["tempmax"]
-      )}°/${Math.round(days[0]["tempmin"])}°</p>
-        <p>${days[0]["description"]}</p>
+        <h3>${resolvedAddress}</h3>
+        <p class="currentTemperature">${Math.round(
+          days[1]["temp"]
+        )}<span class="degree">°</span><sup>c</sup></p>
+        <div class="condition-container">
+        <p class="condition">${days[1]["conditions"]}</p> 
+        <p class="temps">${Math.round(
+          days[0]["tempmax"]
+        )}°<span class="slash">/</span>${Math.round(days[1]["tempmin"])}°</p>
+        </div>
+        <p>${days[1]["description"]}</p>
       `;
 
       city.innerHTML = weatherMarkUp;
@@ -44,3 +54,15 @@ form.addEventListener("submit", (e) => {
   form.reset();
   inputCity.focus();
 });
+
+const formatDate = (date) => {
+  let year = date.getFullYear();
+  let month = ("0" + (date.getMonth() + 1)).slice(-2);
+  let yesterday = ("0" + (date.getDate() - 1)).slice(-2);
+  let nextFivedays = ("0" + (date.getDate() + 4)).slice(-2);
+
+  return {
+    yesterday: `${year}-${month}-${yesterday}`,
+    nextDays: `${year}-${month}-${nextFivedays}`,
+  };
+};
