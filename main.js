@@ -31,9 +31,7 @@ form.addEventListener("submit", (e) => {
 
       const weatherMarkUp = `
         <h3>${resolvedAddress}</h3>
-        <p class="currentTemperature">${Math.round(
-          days[1]["temp"]
-        )}<span class="degree">°</span><sup>c</sup></p>
+        <p class="currentTemperature">${Math.round(days[1]["temp"])}°</p>
         <div class="condition-container">
         <p class="condition">${days[1]["conditions"]}</p> 
         <p class="temps">${Math.round(
