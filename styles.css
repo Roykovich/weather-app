@@ -20,7 +20,7 @@ body {
   row-gap: 10px;
   background-color: var(--bg-100);
   color: var(--text-100);
-  font-family: "Ubuntu", sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .search {
@@ -67,15 +67,9 @@ body {
 }
 
 .info-container > .currentTemperature {
-  margin: 1em 0em 0em 0em;
-  font-size: 10vw;
-  font-weight: lighter;
-}
-
-.info-container > .currentTemperature > sup {
-  position: relative;
-  top: 1px;
-  font-size: 8vw;
+  margin: 0;
+  font-size: 15vw;
+  letter-spacing: -20px;
 }
 
 .info-container > .condition-container {
@@ -87,6 +81,7 @@ body {
 
 .info-container > .condition-container > p {
   margin: 0;
+  font-size: 5vh;
 }
 
 .info-container > .condition-container > p > .slash {
