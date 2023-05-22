@@ -26,19 +26,59 @@ form.addEventListener("submit", (e) => {
       console.log(data);
       const { resolvedAddress, days } = data;
 
+      const today = days[1];
+
       const city = document.createElement("div");
       city.classList.add("info-container");
 
+      // En chance of rain agregar una posibilidad de que agarre el preciptype y dependiendo de que sea decir precipitacion de lluvia o nevada
       const weatherMarkUp = `
-        <h3>${resolvedAddress}</h3>
-        <p class="currentTemperature">${Math.round(days[1]["temp"])}°</p>
-        <div class="condition-container">
-        <p class="condition">${days[1]["conditions"]}</p> 
-        <p class="temps">${Math.round(
-          days[0]["tempmax"]
-        )}°<span class="slash">/</span>${Math.round(days[1]["tempmin"])}°</p>
+        <h2 class="city-title">${resolvedAddress}</h2>
+        <div class="current-temperature-container">
+          <h1 class="current-temperature">
+            ${Math.round(
+              today["temp"]
+            )}°<span class="current-unit-system"></span>
+          </h1>
+          <div class="condition-container">
+            <p class="condition">${today["conditions"]}</p> 
+            <p class="temps">${Math.round(today["tempmax"])}°
+              <span class="slash">/</span>${Math.round(today["tempmin"])}°
+            </p>
+          </div>
         </div>
-        <p>${days[1]["description"]}</p>
+        <div class="detailed-information-container">
+          <p class="detailed-information-description">${
+            today["description"]
+          }</p>
+          <div class="detailed-information-columns">
+            <div class="detailed-column">
+              <p>Feels like: <span class="detailed-value">${Math.round(
+                today["feelslike"]
+              )}°</></p>
+              <p>Humidity: <span class="detailed-value">${Math.round(
+                today["humidity"]
+              )}%</></p>
+              <p>Pressure: <span class="detailed-value">${Math.round(
+                today["pressure"]
+              )}mbar</></p>
+              <p>Chance of Precip: <span class="detailed-value">${
+                today["precipprob"]
+              }%</></p>
+            </div>
+            <div class="detailed-column">
+              <p>Sunrise: <span class="detailed-value">${today["sunrise"].slice(
+                0,
+                -3
+              )}</></p>
+              <p>Sunset: <span class="detailed-value">${today["sunset"].slice(
+                0,
+                -3
+              )}</></p>
+              <p>UV: <span class="detailed-value">${today["uvindex"]}</></p>
+            </div>
+          </div>
+        </div>
       `;
 
       city.innerHTML = weatherMarkUp;
