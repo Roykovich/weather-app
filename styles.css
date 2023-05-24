@@ -15,12 +15,15 @@
   /* outline: red 1px solid; */
 }
 
+/* Considerar un dise;o donde cuando tengas la ciudad te cambie el titulo del
+header y el background con imagenes de paisajes generados por inteligencia artificial */
+
 html,
 body {
   margin: 0;
+  padding: 0em 0.5em;
   display: flex;
   flex-direction: column;
-  padding: 0em 0.5em;
   row-gap: 10px;
   background-color: var(--bg-100);
   color: var(--text-100);
@@ -71,10 +74,15 @@ body {
   font-size: 2.5vw;
 }
 
+.city-temperature-container {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
 .current-temperature-container {
   display: flex;
   flex-direction: column;
-  width: 30%;
   margin: 1em 0;
 }
 
@@ -140,13 +148,14 @@ footer {
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 10%;
+  height: 5%;
+  font-size: 0.8em;
   background-color: var(--bg-200);
 }
 
 @media (max-width: 768px) {
-  .current-temperature-container {
-    width: 50%;
+  .city-temperature-container {
+    width: 100%;
   }
   .city-title {
     font-size: 1.2em;
@@ -155,8 +164,24 @@ footer {
     font-size: 5em;
   }
 
+  .current-temperature-container {
+    display: flex;
+    flex-direction: column;
+  }
+
   .condition-container {
-    width: 100%;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    column-gap: 2em;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .city-title {
+    font-size: 1em;
+  }
+
+  .detailed-information-columns {
+    flex-direction: column;
   }
 }
